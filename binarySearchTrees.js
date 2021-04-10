@@ -46,13 +46,68 @@ class BinarySearchTree {
 				if (current.left === null) return false;
 				if (current.left === value) return true;
 				current = current.left;
-			} else if ((value > current, value)) {
+			} else if (value > current.value) {
 				if (current.right === null) return false;
 				if (current.value === value) return true;
 				current = current.right;
 			}
 		}
-		return false;
+	}
+
+	// BREADTH FIRST SEARCH
+	BFS() {
+		let data = [],
+			queue = [],
+			node = this.root;
+		queue.push(node);
+
+		while (queue.length) {
+			node = queue.shift();
+			data.push(node.value);
+			if (node.left) queue.push(node.left);
+			if (node.right) queue.push(node.right);
+		}
+		return data;
+	}
+
+	// DEPTH FIRST-PRE ORDER -> ONLY FOR BST
+	DFSpreOrder() {
+		if (!this.root) return [];
+		const visited = [];
+		const current = this.root;
+		function traverse(node) {
+			visited.push(node.value);
+			if (node.left) traverse(node.left);
+			if (node.right) traverse(node.right);
+		}
+		traverse(current);
+		return visited;
+	}
+
+	DFSpostOrder() {
+		if (!this.root) return [];
+		const visited = [];
+		const current = this.root;
+		function traverse(node) {
+			if (node.left) traverse(node.left);
+			if (node.right) traverse(node.right);
+			visited.push(node.value);
+		}
+		traverse(current);
+		return visited;
+	}
+
+	DFSInOrder() {
+		if (!this.root) return [];
+		const visited = [];
+		const current = this.root;
+		function traverse(node) {
+			if (node.left) traverse(node.left);
+			visited.push(node.value);
+			if (node.right) traverse(node.right);
+		}
+		traverse(current);
+		return visited;
 	}
 }
 
@@ -62,6 +117,9 @@ tree.insert(8);
 tree.insert(15);
 tree.insert(3);
 tree.insert(100);
-console.log(tree.find(30));
-
-console.log(tree);
+// console.log(tree.find(8));
+// console.log(tree.BFS());
+// console.log(tree.DFSpreOrder());
+// console.log(tree.DFSpostOrder());
+// console.log(tree.DFSInOrder());
+// console.log(tree);
